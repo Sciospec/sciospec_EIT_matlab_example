@@ -38,7 +38,11 @@ end
 
 amplitudeStr = sciospecData.Amplitude;
 disp(['Injected Current amplitude : ' amplitudeStr])
-tmp = split(amplitudeStr);
+if is_octave()
+    tmp = strsplit(amplitudeStr);
+else
+    tmp = split(amplitudeStr);
+end
 amplitude = str2double(tmp{1});
 %% Convert Sciospec data to EIT data
 VeitRef = nan(numOfChannels*(numOfChannels-3), numOfRefFrames);

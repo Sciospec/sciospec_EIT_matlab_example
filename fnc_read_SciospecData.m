@@ -88,10 +88,10 @@ for ii=1:2
     if numHeaders > readLines
         tline = fgetl(fid);readLines=readLines+1;
         if startsWith(tline,'MeasurementChannels:')
-            tmp = replace(replace(tline,'MeasurementChannels: ',''),',',' ');
+            tmp = strrep(strrep(tline,'MeasurementChannels: ',''),',',' ');
             SciospecData.MeasurementChannels=str2num(tmp);
         elseif startsWith(tline,'MeasurementChannelsIndependentFromInjectionPattern:')
-            tmp = replace(replace(tline,'MeasurementChannelsIndependentFromInjectionPattern: ',''),',',' ');
+            tmp = strrep(strrep(tline,'MeasurementChannelsIndependentFromInjectionPattern: ',''),',',' ');
             SciospecData.MeasurementChannelsIndependentFromInjectionPattern=str2num(tmp);
         else
             print("Not supported header")
