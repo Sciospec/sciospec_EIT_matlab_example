@@ -44,15 +44,34 @@ else
     tmp = split(amplitudeStr);
 end
 amplitude = str2double(tmp{1});
+%% Check Mesaure Mode
+measure_mode = fnc_get_measure_mode(fullfile(fpath,setupName,[setupName '.setUp']));
+if measure_mode ~= 1 &&  measure_mode ~= 2
+    error(['Not supported measure mode, measure_mode: ' num2str(measure_mode)])
+end
 %% Convert Sciospec data to EIT data
+rmv_indx = func_rmv_skip(numOfChannels, NSkip);
 VeitRef = nan(numOfChannels*(numOfChannels-3), numOfRefFrames);
 for k=1:numOfRefFrames
-    VeitRef(:,k) = func_ConvertSciospecToEIT(VoltageRef(:,:,k).',numOfChannels,NSkip,false);
+    if measure_mode == 1 % single-ended mode
+        VeitRef(:,k) = func_ConvertSciospecToEIT(VoltageRef(:,:,k).',numOfChannels,NSkip,false);
+    elseif measure_mode == 2 % differntial mode
+        tmp = VoltageRef(:,:,k);
+        tmp(rmv_indx) = [];
+        VeitRef(:,k) = tmp(:);
+    end
+    
 end
 
 VeitAnoMoving = nan(numOfChannels*(numOfChannels-3), numOfImagingFrames);
 for k=1:numOfImagingFrames
-    VeitAnoMoving(:,k) = func_ConvertSciospecToEIT(VoltageAnoMoving(:,:,k).',numOfChannels,NSkip,false);
+    if measure_mode == 1 % single-ended mode
+        VeitAnoMoving(:,k) = func_ConvertSciospecToEIT(VoltageAnoMoving(:,:,k).',numOfChannels,NSkip,false);
+    elseif measure_mode == 2 % differntial mode
+        tmp = VoltageAnoMoving(:,:,k);
+        tmp(rmv_indx) = [];
+        VeitAnoMoving(:,k) = tmp(:);
+    end
 end
 
 v_all = real(VeitAnoMoving);
