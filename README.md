@@ -1,4 +1,4 @@
-# Project Title
+# Sciospec EIT MATLAB Example
 
 Example MATLAB (Octave) code to use Sciospec EIT Data in EIDORS.
 
@@ -12,10 +12,12 @@ Example MATLAB (Octave) code to use Sciospec EIT Data in EIDORS.
 # 📦 Installation
 
 ## Install dependencies
-- Install MATLAB (https://matlab.mathworks.com) or Octave (https://www.octave.org).
-- Install EIDORS (https://eidors3d.sourceforge.net).
+
+- Install MATLAB (<https://matlab.mathworks.com>) or Octave (<https://www.octave.org>).
+- Install EIDORS (<https://eidors3d.sourceforge.net>).
 
 ## How to run
-1. git clone https://github.com/Sciospec/sciospec_EIT_matlab_example.git
+
+1. git clone <https://github.com/Sciospec/sciospec_EIT_matlab_example.git>
 2. start-up EIDORS.
 3. run the main script `main_sciospec_data_with_eidors.m` in MATLAB or Octave.
