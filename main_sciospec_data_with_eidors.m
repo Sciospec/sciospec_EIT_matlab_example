@@ -23,8 +23,7 @@ VoltageRef = nan(numOfChannels, numOfChannels, numOfRefFrames);
 for i=1:numOfRefFrames
     fname = [setupName '_'  sprintf('%.5d', i) '.eit'];
     sciospecData = fnc_read_SciospecData(fullfile(fpath,setupName,fname));
-    voltages = sciospecData.Voltages.voltage(:,channels);
-    VoltageRef(:,:,i) = reshape(voltages(:),numOfChannels,numOfChannels);
+    VoltageRef(:,:,i) = sciospecData.Voltages.voltage(:,channels);
 end
 
 % Anomaly, the water tank with an insulating object (a small cup of class).
@@ -32,8 +31,7 @@ VoltageAnoMoving = nan(numOfChannels, numOfChannels, numOfImagingFrames);
 for i=1:numOfImagingFrames
     fname = [setupName '_'  sprintf('%.5d', i+numOfRefFrames) '.eit'];
     sciospecData = fnc_read_SciospecData(fullfile(fpath,setupName,fname));
-    voltages = sciospecData.Voltages.voltage(:,channels);
-    VoltageAnoMoving(:,:,i) = reshape(voltages(:),numOfChannels,numOfChannels);
+    VoltageAnoMoving(:,:,i) = sciospecData.Voltages.voltage(:,channels);
 end
 
 amplitudeStr = sciospecData.Amplitude;
@@ -57,8 +55,9 @@ for k=1:numOfRefFrames
         VeitRef(:,k) = func_ConvertSciospecToEIT(VoltageRef(:,:,k).',numOfChannels,NSkip,false);
     elseif measure_mode == 2 % differntial mode
         tmp = VoltageRef(:,:,k);
+        tmp = tmp(:);
         tmp(rmv_indx) = [];
-        VeitRef(:,k) = tmp(:);
+        VeitRef(:,k) = tmp;
     end
     
 end
@@ -69,8 +68,9 @@ for k=1:numOfImagingFrames
         VeitAnoMoving(:,k) = func_ConvertSciospecToEIT(VoltageAnoMoving(:,:,k).',numOfChannels,NSkip,false);
     elseif measure_mode == 2 % differntial mode
         tmp = VoltageAnoMoving(:,:,k);
+        tmp = tmp(:);
         tmp(rmv_indx) = [];
-        VeitAnoMoving(:,k) = tmp(:);
+        VeitAnoMoving(:,k) = tmp;
     end
 end
 
